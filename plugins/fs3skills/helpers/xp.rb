@@ -8,6 +8,7 @@ module AresMUSH
       max_xp = Global.read_config("fs3skills", "max_xp_hoard")
       xp = char.xp + amount
       xp = [max_xp, xp].min
+      xp = [0, xp].max
       char.update(fs3_xp: xp)
     end
     
@@ -82,7 +83,7 @@ module AresMUSH
         
         if (ability.learning_complete)
           ability.update(xp: 0, rating: ability.rating + 1)
-          message = t('fs3skills.xp_raised_job', :name => char.name, :ability => name, :rating => ability.rating + 1)
+          message = t('fs3skills.xp_raised_job', :name => char.name, :ability => name, :rating => ability.rating)
           category = Jobs.system_category
           Jobs.create_job(category, t('fs3skills.xp_job_title', :name => char.name), message, Game.master.system_character)        
         end

@@ -1,6 +1,5 @@
 ---
 achievements:
-  custom_achievements: {}
   shortcuts:
     achievements: achievement
   types:

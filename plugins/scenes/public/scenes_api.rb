@@ -20,10 +20,11 @@ module AresMUSH
     
     def self.add_to_scene(scene, pose, character = Game.master.system_character, is_setpose = nil, is_ooc = nil, place_name = nil)
       return nil if !scene.logging_enabled
+      return nil if !pose
       
       scene_pose = ScenePose.create(pose: pose, character: character, scene: scene, is_setpose: is_setpose, is_ooc: is_ooc, place_name: place_name ? place_name : character.place_name(scene.room))
       if (!scene_pose.is_system_pose?)
-        Scenes.add_participant(scene, character)
+        Scenes.add_participant(scene, character, character)
       end
       
       scene.mark_unread(character)
@@ -33,10 +34,6 @@ module AresMUSH
       data[:pose_order] = Scenes.build_pose_order_web_data(scene)
 
       Scenes.new_scene_activity(scene, :new_pose, data.to_json)
-      if (!is_ooc)
-        Scenes.handle_word_count_achievements(character, pose)
-      end
-      
       return scene_pose
     end
     
@@ -44,7 +41,9 @@ module AresMUSH
       if (!scene.invited.include?(char))
         scene.invited.add char
       end
-      Login.emit_ooc_if_logged_in(char, t('scenes.scene_notify_invite', :name => enactor.name, :num => scene.id))        
+      message = t('scenes.scene_notify_invite', :name => enactor.name, :num => scene.id)
+      Login.emit_ooc_if_logged_in(char, message)        
+      Login.notify(char, :scene, message, scene.id)
     end
     
     def self.uninvite_from_scene(scene, char, enactor)
@@ -63,7 +62,9 @@ module AresMUSH
           icdate: ICTime.ictime.strftime("%Y-%m-%d"))
 
       Global.logger.info "Scene #{scene.id} started by #{enactor.name} in #{temp_room ? 'temp room' : enactor.room.name}."
-          
+
+      scene.watchers.add enactor
+                
       if (temp_room)
         room = Scenes.create_scene_temproom(scene)
       else

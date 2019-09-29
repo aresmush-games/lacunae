@@ -9,7 +9,8 @@ module AresMUSH
       end
       if (activity_type =~ /pose/)
         message = t('scenes.new_scene_activity', :id => scene.id)
-        scene.watchers.each do |w|
+        watching_participants = scene.watchers.to_a & scene.participants.to_a
+        watching_participants.each do |w|
           if (last_posed != w.name)
             Login.notify(w, :scene, message, scene.id, "", false)
           end
@@ -54,6 +55,8 @@ module AresMUSH
       Scenes.create_scene_temproom(scene)
       scene.update(completed: false)
       scene.update(was_restarted: true)
+      scene.update(last_activity: Time.now)
+      scene.watchers.replace scene.participants.to_a
       Scenes.new_scene_activity(scene, :status_changed, nil)
     end
     
@@ -123,18 +126,26 @@ module AresMUSH
 
       scene.update(completed: true)
       scene.update(date_completed: Time.now)
+      scene.invited.replace []
+      scene.watchers.replace []
       
       Scenes.new_scene_activity(scene, :status_changed, nil)
       
-      if (!scene.was_restarted)
-        scene.participants.each do |char|
-          Scenes.handle_scene_participation_achievement(char)
+      scene.participants.each do |char|
+        # Don't double-award luck or scene participation if we've already tracked 
+        # that they've participated in that scene.
+        if (!Scenes.participated_in_scene?(char, scene))
+          Scenes.handle_scene_participation_achievement(char, scene)
           if (FS3Skills.is_enabled?)
             FS3Skills.luck_for_scene(char, scene)
           end
         end
       end
     end    
+    
+    def self.participated_in_scene?(char, scene)
+      char.scenes_participated_in.include?("#{scene.id}")
+    end
     
     def self.participants_and_room_chars(scene)
       participants = scene.participants.to_a
@@ -157,9 +168,15 @@ module AresMUSH
       Scenes.participants_and_room_chars(scene).include?(char)
     end
     
-    def self.add_participant(scene, char)
+    def self.add_participant(scene, char, enactor)
       if (!scene.participants.include?(char))
         scene.participants.add char
+        
+        if (!scene.completed && char != enactor)
+          message = t('scenes.scene_notify_added_to_scene', :num => scene.id)
+          Login.notify(char, :scene, message, scene.id)
+          Login.emit_ooc_if_logged_in char, message
+        end
       end
       
       if (!scene.watchers.include?(char))
@@ -203,6 +220,8 @@ module AresMUSH
       
         Scenes.add_to_scene(scene, message, Game.master.system_character, false, true)
       end
+      
+      
       
     end
     
@@ -429,30 +448,28 @@ module AresMUSH
     end 
     
     def self.handle_word_count_achievements(char, pose)
-      [ 1000, 2000, 5000, 10000, 25000, 50000, 100000, 250000, 500000 ].each do |count|
-        pretty_count = count.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
-        message = "Wrote #{pretty_count} words in scenes."
+      char.update(pose_word_count: char.pose_word_count + "#{pose}".split.count)
+      [ 1000, 2000, 5000, 10000, 25000, 50000, 100000, 250000, 500000 ].reverse.each do |count|
         if (char.pose_word_count >= count)
-          Achievements.award_achievement(char, "word_count_#{count}", 'story', message)
+          Achievements.award_achievement(char, "word_count", count)
+          break
         end
       end
     end
-    
-    def self.handle_scene_participation_achievement(char)
-      scenes = Scene.all.select { |s| s.completed && s.participants.include?(char) }
+        
+    def self.handle_scene_participation_achievement(char, scene)
+      return if Scenes.participated_in_scene?(char, scene)
+      
+      scenes = char.scenes_participated_in
+      scenes << "#{scene.id}"
+      char.update(scenes_participated_in: scenes)
       count = scenes.count
-        
-      Scenes.scene_types.each do |type|
-        if (scenes.any? { |s| s.scene_type == type })
-          message = "Participated in a #{type} scene."
-          Achievements.award_achievement(char, "scene_participant_#{type.downcase}", 'story', message)
-        end
-      end
-        
-      [ 1, 10, 20, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 ].each do |level|
+      
+      Achievements.award_achievement(char, "scene_participant_#{scene.scene_type.downcase}")
+      [ 1, 10, 20, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 ].reverse.each do |level|
         if ( count >= level )
-          message = "Participated in #{level} #{level == 1 ? 'scene' : 'scenes'}."
-          Achievements.award_achievement(char, "scene_participant_#{level}", 'story', message)
+          Achievements.award_achievement(char, "scene_participant", level)
+          break
         end
       end
     end
@@ -604,7 +621,23 @@ module AresMUSH
         fs3_enabled: FS3Skills.is_enabled?,
         fs3combat_enabled: FS3Combat.is_enabled?
       }
-    end
+    end    
+    
+    def self.build_scene_summary_web_data(scene)
+      {
+        id: scene.id,
+        title: scene.title,
+        summary: Website.format_markdown_for_html(scene.summary),
+        content_warning: scene.content_warning,
+        date_shared: scene.date_shared,
+        location: scene.location,
+        icdate: scene.icdate,
+        likes: scene.likes,
+        participants: scene.participants.to_a.sort_by { |p| p.name }.map { |p| 
+          { name: p.name, id: p.id, icon: Website.icon_for_char(p) }},
+        scene_type: scene.scene_type ? scene.scene_type.titlecase : 'Unknown',
+        }
+      end
     
     def self.build_location_web_data(scene)
       {
