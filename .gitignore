@@ -42,3 +42,5 @@ killares
 # Game directory
 # -----------------------------
 /game/
+
+.idea/
