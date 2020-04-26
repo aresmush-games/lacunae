@@ -36,10 +36,14 @@ killares
 
 # Website file storage
 # -----------------------------
-/game/uploads
+/game/uploads/*
 /theme_archive
 
 # Game directory
 # -----------------------------
 
 .idea/
+!/game/uploads/misc/
+!/game/uploads/monkey/
+!/game/uploads/theme_images/
+
