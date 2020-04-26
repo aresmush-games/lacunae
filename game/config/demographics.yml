@@ -1,0 +1,100 @@
+---
+demographics:
+  census_fields:
+  - field: name
+    width: 28
+    title: Name
+  - field: demographic
+    width: 10
+    title: Gender
+    value: gender
+  - field: group
+    width: 20
+    title: Faction
+    value: Faction
+  - field: group
+    width: 20
+    title: Position
+    value: Position
+  demographics:
+  - full name
+  - gender
+  - hair
+  - eyes
+  - skin
+  - height
+  - physique
+  - played by
+  - birthdate
+  - nickname
+  - origin
+  disable_auto_shortcuts: false
+  editable_properties:
+  - full name
+  - gender
+  - hair
+  - physique
+  - nickname
+  groups:
+    Faction:
+      desc: When it comes to leaving or staying in Lacunae, which camp is your  character
+        align with?  The Twelve have uses for all... (see wiki for more complete info)
+      wiki: ''
+      values:
+        Sojourner: Someone who wants to escape purgatory.
+        The Lost: Those who move from one faction to the other as it suits them.
+        Dweller: Someone wants to remain in purgatory.
+    Position:
+      desc: Job.
+      wiki: ''
+      values: 
+  help_text:
+    playedby: "%xcplayedby <actor>%xn - The actor/actress depicting your character."
+    physique: "%xcphysique <build/body type>%xn - athletic, wiry, slim, pudgy, etc."
+    gender: "%xcgender <male/female/other>%xn"
+    hair: "%xchair <hair color>%xn"
+    eyes: "%xceyes <eye color>%xn"
+    skin: "%xcskin <complexion>%xn"
+    birthdate: "%xcbirthdate <mm/dd/yyy>%xn or %xcage <years>%xn"
+    nickname: "%xcnickname <nickname>%xn - Enter a nickname."
+  max_age: 100
+  min_age: 18
+  nickname_field: nickname
+  nickname_format: "%{name} (%{nickname})"
+  private_properties: []
+  required_properties:
+  - played by
+  - hair
+  - eyes
+  - skin
+  - height
+  - physique
+  - full name
+  - gender
+  - birthdate
+  - origin
+  shortcuts:
+    groups: group
+    colonies: group colony
+    demographics: demographic
+    birthday: birthdate
+    actors: census played by
+    actor: demographic/set played by=
+    fullname: demographic/set full name=
+    playedby: demographic/set played by=
+  genders:
+    Male:
+      possessive_pronoun: his
+      subjective_pronoun: he
+      objective_pronoun: him
+      noun: man
+    Female:
+      possessive_pronoun: her
+      subjective_pronoun: she
+      objective_pronoun: her
+      noun: woman
+    Other:
+      possessive_pronoun: their
+      subjective_pronoun: they
+      objective_pronoun: them
+      noun: person

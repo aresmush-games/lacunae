@@ -1,0 +1,19 @@
+---
+cookies:
+  achievements:
+    cookie_given:
+      type: community
+      message: Gave a cookie.
+    cookie_received:
+      type: community
+      message: Received %{count} cookies.
+  cookie_award_cron:
+    day_of_week:
+    - Fri
+    hour:
+    - 22
+    minute:
+    - 0
+  cookie_category: None
+  shortcuts:
+    cookies: cookie

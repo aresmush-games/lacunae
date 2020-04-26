@@ -1,0 +1,131 @@
+---
+fs3combat:
+  armor:
+    None:
+      description: In case you do not have protection
+      defense: 0
+      protection:
+        Nowhere: 0
+    Armor:
+      description: Heavy Chest and Head/Face PC Armor
+      defense: 0
+      protection:
+        Head: 7
+        Neck: 5
+        Chest: 8
+        Abdomen: 7
+    Vest:
+      description: Chest Protection PC Armor
+      defense: 0
+      protection:
+        Chest: 7
+        Abdomen: 6
+      allowed_specials:
+      - Helmet
+    Brute:
+      description: Heavy NPC Armor
+      defense: 0
+      protection:
+        Head: 9
+        Neck: 9
+        Chest: 10
+        Abdomen: 10
+        Left Arm: 8
+        Right Arm: 8
+        Left Hand: 7
+        Right Hand: 7
+        Left Leg: 9
+        Right Leg: 9
+        Left Foot: 7
+        Right Foot: 7
+    Runt:
+      description: Light NPC Armor
+      defense: 0
+      protection:
+        Head: 6
+        Neck: 7
+        Chest: 7
+        Abdomen: 7
+        Left Arm: 5
+        Right Arm: 5
+        Left Hand: 6
+        Right Hand: 5
+        Left Leg: 6
+        Right Leg: 6
+        Left Foot: 5
+        Right Foot: 5
+    Assault Flyer:
+      description: Assault Mount Armor
+      defense: 0
+      protection:
+        Body: 8
+        Engine: 8
+        Tail: 8
+        Wing: 8
+        Weapon: 7
+        Nose: 8
+        Cockpit: 6
+        Controls: 7
+    Support Flyer:
+      description: Support Mount Armor
+      defense: 0
+      protection:
+        Body: 10
+        Engine: 10
+        Tail: 8
+        Wing: 8
+        Weapon: 6
+        Nose: 8
+        Cockpit: 6
+        Controls: 8
+    Heavy Flyer:
+      description: Heavy Mount Armor
+      defense: 0
+      protection:
+        Body: 10
+        Engine: 10
+        Tail: 8
+        Wing: 8
+        Weapon: 6
+        Nose: 8
+        Cockpit: 6
+        Controls: 8
+    Tank:
+      description: Flightless Fortified Vehicle Armor (tank)
+      defense: 0
+      protection:
+        Body: 22
+        Engine: 22
+        Weapon: 10
+        Track: 15
+        Side: 15
+        Cabin: 22
+    Heavy Vehicle:
+      description: Flightless Heavy Vehicle Armor (apc)
+      defense: 0
+      protection:
+        Body: 12
+        Engine: 12
+        Weapon: 6
+        Track: 8
+        Side: 10
+        Cabin: 12
+    Light Vehicle:
+      description: Flightless Light Vehicle Armor
+      defense: 0
+      protection:
+        Body: 7
+        Cab: 6
+        Engine: 8
+    AA Battery:
+      description: Anti-Air Battery (e.g. Anti-Aircraft Battery)
+      defense: 0
+      protection:
+        Body: 7
+        Controls: 7
+        Weapon: 6
+  armor specials:
+    Helmet:
+      description: A helmet
+      protection:
+        Head: 4

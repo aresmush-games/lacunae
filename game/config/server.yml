@@ -1,0 +1,16 @@
+server:
+    hostname: lacunae.aresmush.com
+
+    port: 6666
+    
+    websocket_port: 9999
+
+    web_portal_port: 80
+    
+    engine_api_port: 6699
+    
+    use_https: true
+    
+    certificate_file_path: '/home/ares/certs/fullchain.pem'
+    
+    private_key_file_path: '/home/ares/certs/privkey.pem'

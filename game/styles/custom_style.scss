@@ -1,0 +1,40 @@
+/* Put any custom styles here.  They will override the default styles. */
+
+@import url('https://fonts.google.com/specimen/Chilanka');
+@import url('https://fonts.googleapis.com/css?family=Lacquer&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Marcellus&display=swap');
+
+body {    
+  font-family: 'Marcellus', serif;
+} 
+
+p {
+  font-size: 16px;
+}
+
+.site-title {
+  font-family: 'Lacquer', sans-serif;
+  /*text-shadow: 3px 5px 2px #000000;*/
+  text-shadow: 1px 3px 0 #000000, 1px 10px 5px #000000;
+}
+
+.dropdown-menu {
+     background-color: #000;
+}
+
+.dropdown-menu>li>a {
+     color: #fff;
+}
+
+.pose-divider {
+  border: 0.5px dashed #293344;
+  height: 1px; }
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #212121; }
+
+.site-subtitle {display: none}
+
+.site-title {display: none}
+
+code { color: #525252 }

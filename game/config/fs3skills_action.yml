@@ -1,0 +1,69 @@
+---
+fs3skills:
+  action_skills:
+  - name: Alertness
+    desc: Noticing things and being aware of your surroundings.
+    linked_attr: Perception
+  - name: Athletics
+    desc: General running, jumping, climbing, etc.
+    linked_attr: Brawn
+  - name: Composure
+    desc: Coolness under pressure.
+    linked_attr: Grit
+  - name: Firearms
+    desc: Shooting guns.
+    linked_attr: Reflexes
+    specialties:
+    - Handgun
+    - Dual Handguns
+    - Shotgun
+    - Sniper
+    - Rifles
+    - Heavy Weapons
+    - Gunnery
+    - Artillery
+  - name: Medicine
+    desc: Tending to the ill and injured.
+    linked_attr: Wits
+    specialties:
+    - Doctor
+    - Surgeon
+    - Nurse
+    - Medic
+    - Other
+  - name: Melee
+    desc: Fighting with fists, knives, and hand-to-hand weapons.
+    linked_attr: Brawn
+    specialties:
+    - Jujitsu
+    - Karate
+    - Krav Maga
+    - Muay Thai
+    - Capoeira
+    - Systema
+    - Kung Fu
+    - Tai Chi
+    - Brawling
+  - name: Stealth
+    desc: Being physically sneaky.
+    linked_attr: Reflexes
+  - name: Repair
+    desc: General fixing things
+    linked_attr: Wits
+    specialties:
+    - Mechanic
+    - Electronics
+    - Tinkering
+  - name: Subterfuge
+    desc: Being generally sneaky.
+    linked_attr: Presence
+  - name: Investigation
+    desc: Finding things.
+    linked_attr: Perception
+  - name: Influence
+    desc: Leadership, Interrogation, Intimidation and Persuasion
+    linked_attr: Presence
+  action_skills_blurb: 'Action Skills represent your ability in areas deemed important
+    for gameplay.  Action Skills are rated from 0-8, but some games limit the highest
+    and lowest ratings. See [FS3: Action Skills](https://aresmush.com/fs3/fs3-3/chargen.html#action-skills)
+    for details.'

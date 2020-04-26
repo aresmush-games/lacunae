@@ -1,0 +1,11 @@
+---
+fs3skills:
+  language_blurb: 'Languages represent your ability to speak and read other languages.  Languages
+    have a descriptive rating.   See [FS3: Languages](https://aresmush.com/fs3/fs3-3/chargen.html#languages)
+    for details.'
+  languages:
+  - name: Low Dialect
+    desc: Fluency in the low dialect will allow you to understand most languages.
+  - name: High Dialect
+    desc: In addition to languages, you'll understand incantations, spoken magic.
+  starting_languages: []
