@@ -1,3 +1,5 @@
+(**note**:  No longer developed/active.  Not built with AresMUSH+)
+
 ![Build Status](https://travis-ci.org/AresMUSH/aresmush.svg?branch=master)
 
 AresMUSH
